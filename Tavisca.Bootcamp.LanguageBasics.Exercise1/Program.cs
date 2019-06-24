@@ -22,11 +22,21 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
 
     public static int FindDigit(string equation)
     {
-      var comp = equation.Split('=');
-      var digits = comp[0].Split('*');
-      if (comp[0].Contains('?'))
+      var components = equation.Split('=');
+      var digits = components[0].Split('*');
+
+      int rhsResult;
+      var rhs = int.TryParse(components[1], out rhsResult);
+
+      int firstDigitResult;
+      var firstDigit = int.TryParse(digits[0], out firstDigitResult);
+
+      int secondDigitResult;
+      var secondDigit = int.TryParse(digits[1], out secondDigitResult);
+
+      if (components[0].Contains('?'))
       {
-        var result = digits[0].Contains('?') ? ((int.Parse(comp[1]) / int.Parse(digits[1])).ToString()) : ((int.Parse(comp[1]) / int.Parse(digits[0])).ToString());
+        var result = digits[0].Contains('?') ? ((rhsResult / secondDigitResult).ToString()) : ((rhsResult / firstDigitResult).ToString());
 
         if (digits[0].Contains('?'))
         {
@@ -34,26 +44,36 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
           {
             var digitsC = digits[0].ToCharArray();
             var resultC = result.ToCharArray();
-            for (var i = 0; i < result.Length; i++)
+            for (var index = 0; index < result.Length; index++)
             {
-              if (digitsC[i] != resultC[i])
-                return int.Parse(resultC[i].ToString());
+              if (digitsC[index] != resultC[index])
+              {
+                int returnResult;
+                var temp = int.TryParse(resultC[index].ToString(), out returnResult);
+                return returnResult;
+              }
+
             }
           }
           return -1;
         }
         else
         {
-          if ((int.Parse(comp[1]) % int.Parse(digits[0])) != 0)
+          if ((rhsResult % firstDigitResult) != 0)
             return -1;
           if (digits[1].Length == result.Length)
           {
             var digitsC = digits[1].ToCharArray();
             var resultC = result.ToCharArray();
-            for (var i = 0; i < result.Length; i++)
+            for (var index = 0; index < result.Length; index++)
             {
-              if (digitsC[i] != resultC[i])
-                return int.Parse(resultC[i].ToString());
+              if (digitsC[index] != resultC[index])
+              {
+                int returnResult;
+                var temp = int.TryParse(resultC[index].ToString(), out returnResult);
+                return returnResult;
+              }
+
             }
           }
           return -1;
@@ -62,14 +82,18 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
       }
       else
       {
-        var index = comp[1].IndexOf('?');
+        var index = components[1].IndexOf('?');
         var result = 1;
         foreach (var digit in digits)
         {
-          result *= int.Parse(digit);
+          int tempInt;
+          var tempBool = int.TryParse(digit, out tempInt);
+          result *= tempInt;
         }
         var strResult = result.ToString().ToCharArray();
-        return int.Parse(strResult[index].ToString());
+        int intResult;
+        bool finalResult = int.TryParse(strResult[index].ToString(), out intResult);
+        return intResult;
       }
     }
   }
