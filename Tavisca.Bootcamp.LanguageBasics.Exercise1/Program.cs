@@ -49,7 +49,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
               if (digitsC[index] != resultC[index])
               {
                 int returnResult;
-                var temp = int.TryParse(resultC[index].ToString(), out returnResult);
+                var booleanResult = int.TryParse(resultC[index].ToString(), out returnResult);
                 return returnResult;
               }
 
@@ -70,7 +70,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
               if (digitsC[index] != resultC[index])
               {
                 int returnResult;
-                var temp = int.TryParse(resultC[index].ToString(), out returnResult);
+                var booleanResult = int.TryParse(resultC[index].ToString(), out returnResult);
                 return returnResult;
               }
 
@@ -86,9 +86,9 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
         var result = 1;
         foreach (var digit in digits)
         {
-          int tempInt;
-          var tempBool = int.TryParse(digit, out tempInt);
-          result *= tempInt;
+          int parseResult;
+          var parseBoolean = int.TryParse(digit, out parseResult);
+          result *= parseResult;
         }
         var strResult = result.ToString().ToCharArray();
         int intResult;
